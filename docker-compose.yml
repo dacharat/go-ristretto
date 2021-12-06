@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  go-ristretto:
+    build: ./
+    image: go-ristretto
+    depends_on:
+      - redis
+    ports:
+      - "8080:8080"
+    container_name: go-ristretto
+    environment:
+      REDIS_URL: redis:6379
+    networks:
+      - ristretto
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - ristretto
+
+volumes:
+  ristretto:
+networks:
+  ristretto:
